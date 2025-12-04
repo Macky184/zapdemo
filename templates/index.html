@@ -8,6 +8,11 @@
 <br>
     <h2>Home</h2>
     <p>Hello {{ username}}!</p>
+    <form method="GET" action="/index">
+    <input type="text" name="msg" placeholder="メッセージを入力">
+    <button type="submit">Send</button>
+    </form>
+    <p>XSS or SSTI output: {{ msg | safe }}</p>
     <a href="/admin">Go to Admin page</a><br>
     <a href="/logout">Logout</a>
 </body>

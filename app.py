@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, render_template_string
 
 app = Flask(__name__)
 app.secret_key = "zap-demo-secret"  
@@ -28,7 +28,12 @@ def login():
 def index():
     if "username" not in session:
         return redirect("/login")
-    return render_template("index.html", username=session["username"])
+    msg = request.args.get("msg", "")
+    try:
+        evaluated = render_template_string(msg)
+    except Exception as e:
+        evaluated = f"Error: {e}"
+    return render_template("index.html", username=session["username"], msg=evaluated)
 
 @app.route("/admin")
 def admin():
